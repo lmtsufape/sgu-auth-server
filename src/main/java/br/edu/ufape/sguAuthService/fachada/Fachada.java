@@ -336,6 +336,10 @@ public class Fachada {
         unidadeAdministrativaService.removerFuncionario(unidadeId, funcionario);
     }
 
+    public UnidadeAdministrativa listarTecnicosUnidade(Long id) throws UnidadeAdministrativaNotFoundException{
+        return unidadeAdministrativaService.buscarUnidadeAdministrativa(id);
+    }
+
 
     // ==================Tipo Unidade Administrativa ================== //
      public TipoUnidadeAdministrativa salvarTipo(TipoUnidadeAdministrativa tipoUnidadeAdministrativa) {
