@@ -85,16 +85,22 @@ public class UsuarioService implements br.edu.ufape.sguAuthService.servicos.inte
 
     @Override
     public List<Usuario> buscarUsuariosPorIds(List<UUID> kcIds) {
+        if (kcIds == null || kcIds.isEmpty()) {
+            return java.util.Collections.emptyList();
+        }
+
         List<Usuario> usuarios = usuarioRepository.findByIdIn(kcIds);
 
         Map<UUID, Usuario> usuarioMap = usuarios.stream()
                 .collect(Collectors.toMap(Usuario::getId, Function.identity()));
 
-        List<Usuario> users =  kcIds.stream()
+        // O filtro "Objects::nonNull" garante que não devolveremos "nulls" no JSON se um UUID não for encontrado
+        List<Usuario> users = kcIds.stream()
                 .map(usuarioMap::get)
+                .filter(java.util.Objects::nonNull)
                 .collect(Collectors.toList());
 
-        logger.info("Usuarios encontrados: {}", users.getFirst().getPerfil(Aluno.class));
+        logger.info("Buscados {} usuarios em batch.", users.size());
         return users;
     }
 
