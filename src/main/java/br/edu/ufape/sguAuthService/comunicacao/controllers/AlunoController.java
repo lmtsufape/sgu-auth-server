@@ -1,6 +1,7 @@
 package br.edu.ufape.sguAuthService.comunicacao.controllers;
 
 
+import br.edu.ufape.sguAuthService.comunicacao.dto.aluno.AlunoPublicResponse;
 import br.edu.ufape.sguAuthService.comunicacao.dto.aluno.AlunoResponse;
 import br.edu.ufape.sguAuthService.exceptions.notFoundExceptions.AlunoNotFoundException;
 import br.edu.ufape.sguAuthService.exceptions.notFoundExceptions.UsuarioNotFoundException;
@@ -59,5 +60,13 @@ public class AlunoController {
         return new ResponseEntity<>(new AlunoResponse(response, modelMapper), HttpStatus.OK);
     }
 
+    @PostMapping("/public/batch")
+    public ResponseEntity<List<AlunoPublicResponse>> listarAlunosPublicosEmBatch(@RequestBody List<UUID> ids) {
+        List<AlunoPublicResponse> response = fachada.listarUsuariosEmBatch(ids).stream()
+                .map(AlunoPublicResponse::new)
+                .toList();
+
+        return ResponseEntity.ok(response);
+    }
 
 }

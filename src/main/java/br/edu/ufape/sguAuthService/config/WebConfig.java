@@ -32,6 +32,7 @@ public class WebConfig {
                         .requestMatchers("/logout").permitAll()
                         .requestMatchers("/reset-password").permitAll()
                         .requestMatchers(HttpMethod.GET, "/tipoEtnia").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/aluno/public/batch").permitAll()
                         .anyRequest().authenticated()
                 ).oauth2ResourceServer(auth -> auth.jwt(token -> token.jwtAuthenticationConverter(new KeycloakJwtAuthenticationConverter())));
         return http.build();
